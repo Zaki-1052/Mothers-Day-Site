@@ -74,7 +74,31 @@ git clone <your-repo-url>
 cd mothers-day-carousel
 ```
 
-### 2. Backend Setup
+### 2. Quick Start (Recommended)
+
+We've included startup scripts to get both the backend and frontend running with a single command:
+
+**On macOS/Linux:**
+```bash
+./start.sh
+```
+
+**On Windows:**
+```bash
+start.bat
+```
+
+These scripts will:
+- Check if dependencies are installed, and install them if needed
+- Start the backend server on port 3001
+- Start the frontend development server on port 5173
+- Open the necessary terminals/command prompts
+
+### 3. Manual Setup
+
+If you prefer to set up each part individually:
+
+#### Backend Setup
 
 ```bash
 cd server
@@ -103,7 +127,7 @@ Start the backend server:
 npm start
 ```
 
-### 3. Frontend Setup
+#### Frontend Setup
 
 ```bash
 cd ../src
