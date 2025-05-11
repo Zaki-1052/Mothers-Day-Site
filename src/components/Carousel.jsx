@@ -11,7 +11,7 @@ const buttonClass =
 
 // Enhanced responsive flex container for carousel
 const containerClass =
-  "flex flex-col sm:flex-row items-center justify-center w-full max-w-2xl py-4 px-2 sm:px-4 md:px-0";
+  "flex flex-col sm:flex-row items-center justify-center w-full max-w-4xl py-2 sm:py-4 px-2 sm:px-4 md:px-0 mx-auto";
 
 // Card animation variants for framer-motion with enhanced transitions
 const cardVariants = {
@@ -87,7 +87,7 @@ const Carousel = ({
   const card = cards[index] || {};
 
   return (
-    <section className={containerClass} aria-label="Mother's Day Card Carousel">
+    <section className={containerClass + " pt-2 pb-8"} aria-label="Mother's Day Card Carousel">
       {/* Left Arrow - more touch-friendly on mobile */}
       <Motion.button
         className={`${buttonClass} min-w-[44px] min-h-[44px] flex items-center justify-center`}
@@ -102,7 +102,7 @@ const Carousel = ({
       </Motion.button>
 
       {/* Card with enhanced animation */}
-      <div className="relative w-full max-w-xs sm:max-w-sm md:w-96 h-[380px] sm:h-[420px] flex items-center justify-center mx-2 perspective-1000">
+      <div className="relative w-full max-w-sm sm:max-w-md md:w-[500px] h-[480px] sm:h-[550px] flex items-center justify-center mx-2 perspective-1000">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <Motion.div
             key={index}

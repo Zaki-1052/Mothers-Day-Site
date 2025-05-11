@@ -93,12 +93,12 @@ const App = () => {
 
   // Enhanced responsive container styles
   const containerClass =
-    "min-h-screen flex flex-col items-center justify-between bg-[#f7eac9] text-purple-800 px-4 sm:px-6 md:px-8 overflow-x-hidden";
+    "min-h-screen flex flex-col items-center justify-between bg-[#f7eac9] text-purple-800 px-4 sm:px-6 md:px-8 overflow-x-hidden relative";
 
   return (
     <div className={containerClass}>
       <Header />
-      <main className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-6 sm:py-8 md:py-12">
+      <main className="flex-1 w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-4 sm:py-6 md:py-8">
         {/* Error message for API issues */}
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 w-full max-w-lg rounded shadow-sm">

@@ -37,7 +37,7 @@ const heartVariants = {
 
 const Footer = () => (
   <footer
-    className="w-full flex flex-col items-center justify-center py-6 mt-8 select-none relative"
+    className="w-full flex flex-col items-center justify-center py-6 mt-2 mb-4 select-none sticky bottom-0"
     aria-label="Footer: Love, Zaki"
   >
     {/* Decorative elements */}

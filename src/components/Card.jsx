@@ -92,15 +92,15 @@ const Card = ({ card, loading, error, theme }) => {
 
   // Responsive card container
   const cardClass =
-    "bg-white rounded-2xl shadow-lg flex flex-col items-center justify-between w-full h-full p-4 transition-all duration-300";
+    "bg-white rounded-2xl shadow-xl flex flex-col items-center justify-between w-full h-full p-6 transition-all duration-300 mx-auto max-w-md border border-purple-100";
 
   // Image container for aspect ratio
   const imageContainerClass =
-    "w-full h-64 flex items-center justify-center mb-2 overflow-hidden rounded-xl bg-purple-50";
+    "w-full h-80 flex items-center justify-center mb-4 overflow-hidden rounded-xl bg-purple-50";
 
   // Caption/prompt styling
   const captionClass =
-    "mt-2 text-center text-base sm:text-lg font-medium text-purple-800 min-h-[48px] px-2";
+    "mt-2 text-center text-sm sm:text-base md:text-lg font-medium text-purple-800 max-h-[100px] sm:max-h-[120px] px-2 sm:px-4 py-2 overflow-y-auto";
 
   // Download button styling
   const downloadButtonClass =
@@ -141,13 +141,15 @@ const Card = ({ card, loading, error, theme }) => {
           <EmptyState theme={theme} />
         )}
       </div>
-      <motion.div 
+      <motion.div
         className={captionClass}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        {prompt || <span className="text-purple-300">No prompt yet. Click "Generate"!</span>}
+        <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 shadow-sm">
+          {prompt || <span className="text-purple-300">No prompt yet. Click "Generate"!</span>}
+        </div>
       </motion.div>
       {imageDownloadUrl && (
         <motion.a

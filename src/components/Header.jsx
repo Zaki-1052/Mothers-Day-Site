@@ -4,25 +4,29 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Animation variants for entrance and looping effect
+// Animation variants for entrance and looping effect with persistence
 const headerVariants = {
   initial: { scale: 0.8, opacity: 0, y: -40 },
   animate: {
-    scale: [1, 1.08, 1],
-    opacity: 1,
+    scale: [1, 1.05, 1.05, 1.05, 1.05, 1.05, 1],
+    opacity: [0, 1, 1, 1, 1, 1, 1],
     y: 0,
     color: [
       "#a78bfa", // light purple
       "#7c3aed", // deep purple
+      "#7c3aed", // stay at deep purple
+      "#7c3aed", // stay at deep purple
+      "#7c3aed", // stay at deep purple
       "#c4b5fd", // pastel purple
       "#a78bfa"
     ],
     transition: {
-      duration: 2.5,
+      duration: 8, // Longer duration to accommodate the persistence
+      times: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1], // Control timing of keyframes to maintain stable state
       repeat: Infinity,
       repeatType: "loop",
       ease: "easeInOut",
-      color: { duration: 2.5, repeat: Infinity, repeatType: "loop" }
+      color: { duration: 8, times: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1], repeat: Infinity, repeatType: "loop" }
     }
   }
 };
@@ -42,7 +46,7 @@ const decorationVariants = {
 };
 
 const Header = () => (
-  <header className="w-full flex flex-col items-center mt-8 mb-4 select-none relative">
+  <header className="w-full flex flex-col items-center mt-4 sm:mt-6 md:mt-8 mb-2 sm:mb-4 select-none relative">
     {/* Decorative elements */}
     <motion.div 
       className="absolute -left-4 top-2 md:left-1/4 md:-top-4"
