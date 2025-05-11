@@ -5,29 +5,43 @@ import React from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Card from './Card';
 
-// Carousel navigation and action button styles
+// Carousel navigation and action button styles with enhanced interactions
 const buttonClass =
-  "rounded-full bg-purple-200 hover:bg-purple-300 text-purple-800 font-bold px-4 py-2 m-2 shadow transition disabled:opacity-50 disabled:cursor-not-allowed";
+  "rounded-full bg-purple-200 hover:bg-purple-300 text-purple-800 font-bold px-4 py-2 m-2 shadow transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 hover:shadow-md";
 
-// Responsive flex container for carousel
+// Enhanced responsive flex container for carousel
 const containerClass =
-  "flex flex-col sm:flex-row items-center justify-center w-full max-w-2xl py-4";
+  "flex flex-col sm:flex-row items-center justify-center w-full max-w-2xl py-4 px-2 sm:px-4 md:px-0";
 
-// Card animation variants for framer-motion
+// Card animation variants for framer-motion with enhanced transitions
 const cardVariants = {
   enter: (direction) => ({
     x: direction > 0 ? 300 : -300,
     opacity: 0,
+    scale: 0.8,
+    rotateY: direction > 0 ? 30 : -30,
     position: 'absolute',
   }),
   center: {
+    zIndex: 1,
     x: 0,
     opacity: 1,
+    scale: 1,
+    rotateY: 0,
     position: 'relative',
+    transition: {
+      x: { type: "spring", stiffness: 300, damping: 30 },
+      opacity: { duration: 0.5 },
+      scale: { type: "spring", stiffness: 300, damping: 30 },
+      rotateY: { type: "spring", stiffness: 300, damping: 30 }
+    }
   },
   exit: (direction) => ({
+    zIndex: 0,
     x: direction < 0 ? 300 : -300,
     opacity: 0,
+    scale: 0.8,
+    rotateY: direction < 0 ? 30 : -30,
     position: 'absolute',
   }),
 };
@@ -74,20 +88,22 @@ const Carousel = ({
 
   return (
     <section className={containerClass} aria-label="Mother's Day Card Carousel">
-      {/* Left Arrow */}
-      <button
-        className={buttonClass}
+      {/* Left Arrow - more touch-friendly on mobile */}
+      <Motion.button
+        className={`${buttonClass} min-w-[44px] min-h-[44px] flex items-center justify-center`}
         onClick={handlePrev}
         disabled={index === 0 || loading}
         aria-label="Previous card"
         tabIndex={0}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
-        &#8592;
-      </button>
+        <span className="text-lg sm:text-xl">&#8592;</span>
+      </Motion.button>
 
-      {/* Card with animation */}
-      <div className="relative w-full sm:w-96 h-[420px] flex items-center justify-center mx-2">
-        <AnimatePresence initial={false} custom={direction}>
+      {/* Card with enhanced animation */}
+      <div className="relative w-full max-w-xs sm:max-w-sm md:w-96 h-[380px] sm:h-[420px] flex items-center justify-center mx-2 perspective-1000">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
           <Motion.div
             key={index}
             custom={direction}
@@ -95,8 +111,17 @@ const Carousel = ({
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="w-full h-full"
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+              duration: 0.5
+            }}
+            className="w-full h-full transform-style-3d"
+            style={{
+              transformStyle: "preserve-3d",
+              perspective: "1000px"
+            }}
           >
             <Card
               card={card}
@@ -106,39 +131,77 @@ const Carousel = ({
             />
           </Motion.div>
         </AnimatePresence>
+
+        {/* Theme indicator */}
+        {theme && (
+          <Motion.div
+            className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-purple-100 px-3 py-1 rounded-full text-sm text-purple-600 font-medium shadow-sm hidden sm:block"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            key={`theme-${index}`}
+          >
+            {theme}
+          </Motion.div>
+        )}
       </div>
 
-      {/* Right Arrow */}
-      <button
-        className={buttonClass}
+      {/* Right Arrow - more touch-friendly on mobile */}
+      <Motion.button
+        className={`${buttonClass} min-w-[44px] min-h-[44px] flex items-center justify-center`}
         onClick={handleNext}
         disabled={index === cards.length - 1 || loading}
         aria-label="Next card"
         tabIndex={0}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
-        &#8594;
-      </button>
+        <span className="text-lg sm:text-xl">&#8594;</span>
+      </Motion.button>
 
-      {/* Action Buttons */}
+      {/* Action Buttons with enhanced interactions */}
       <div className="flex flex-row sm:flex-col items-center justify-center mt-4 sm:mt-0 sm:ml-4">
-        <button
+        <Motion.button
           className={buttonClass + " bg-purple-500 text-white hover:bg-purple-600"}
           onClick={onGenerate}
           disabled={loading}
           aria-label="Generate card"
           tabIndex={0}
+          whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(124, 58, 237, 0.4)" }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
         >
-          {loading ? "Generating..." : "Generate"}
-        </button>
-        <button
+          {loading ? (
+            <span className="flex items-center">
+              <Motion.svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              >
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </Motion.svg>
+              Generating...
+            </span>
+          ) : (
+            <>✨ Generate</>
+          )}
+        </Motion.button>
+        <Motion.button
           className={buttonClass + " bg-blue-500 text-white hover:bg-blue-600"}
           onClick={onDownload}
           disabled={loading || !card.imageDownloadUrl}
           aria-label="Download card image"
           tabIndex={0}
+          whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(37, 99, 235, 0.4)" }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
         >
-          Download
-        </button>
+          💾 Download
+        </Motion.button>
       </div>
     </section>
   );

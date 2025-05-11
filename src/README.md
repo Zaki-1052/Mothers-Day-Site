@@ -1,12 +1,79 @@
-# React + Vite
+# Mother's Day Carousel - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Mother's Day Carousel application, a full-stack web application for generating and sharing animated, themed "Happy Mother's Day!" cards using OpenAI's GPT-4 and image generation APIs.
 
-Currently, two official plugins are available:
+## Technology Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: React 19 with Vite
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **API Communication**: Axios
+- **Development**: ESLint, Autoprefixer, PostCSS
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── assets/                 # Static assets like SVGs, images
+├── components/             # Reusable React components
+│   ├── Card.jsx            # Card component for displaying generated images
+│   ├── Carousel.jsx        # Main carousel with navigation
+│   ├── Footer.jsx          # Footer with "LOVE, ZAKI!" branding
+│   └── Header.jsx          # Animated header
+├── styles/                 # CSS and styling related files
+│   └── tailwind.config.js  # Tailwind configuration (alternative)
+├── App.css                 # App-specific styles
+├── App.jsx                 # Main application component
+├── index.css               # Global styles and Tailwind imports
+├── index.html              # HTML entry point
+├── main.jsx                # React entry point
+├── postcss.config.js       # PostCSS configuration for Tailwind
+├── tailwind.config.js      # Main Tailwind configuration
+└── vite.config.js          # Vite configuration with API proxy
+```
+
+## Development
+
+1. Install dependencies:
+   ```
+   npm install
+   ```
+
+2. Start the development server:
+   ```
+   npm run dev
+   ```
+
+3. Build for production:
+   ```
+   npm run build
+   ```
+
+## Frontend Features
+
+- **Interactive Carousel**: Navigate through themed cards
+- **AI Image Generation**: Generate AI images via backend API
+- **Responsive Design**: Works on mobile, tablet, and desktop
+- **Animations**: Smooth transitions and effects
+- **Accessibility**: Keyboard navigation, ARIA labels
+
+## API Integration
+
+The frontend communicates with the backend through these endpoints:
+
+- `GET /api/themes`: Retrieves available themes
+- `POST /api/generate-prompt`: Generates a text prompt for a theme
+- `POST /api/generate-image`: Creates an image from a prompt
+- `/images/:filename`: Serves generated images
+
+## Environment Variables
+
+Create a `.env` file in the root directory with:
+
+```
+# API Base URL (default is same origin due to proxy configuration)
+VITE_API_BASE=
+
+# Enable debugging (optional)
+VITE_DEBUG=false
+```

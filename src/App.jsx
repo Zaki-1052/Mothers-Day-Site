@@ -7,8 +7,6 @@ import Header from './components/Header';
 import Carousel from './components/Carousel';
 import Footer from './components/Footer';
 
-// Tailwind styles are assumed to be imported globally
-
 // Maximum number of cards in the carousel
 const MAX_CARDS = 12;
 
@@ -93,14 +91,30 @@ const App = () => {
     document.body.removeChild(link);
   };
 
-  // Responsive container styles
+  // Enhanced responsive container styles
   const containerClass =
-    "min-h-screen flex flex-col items-center justify-between bg-[#f7eac9] text-purple-800 px-2 sm:px-4";
+    "min-h-screen flex flex-col items-center justify-between bg-[#f7eac9] text-purple-800 px-4 sm:px-6 md:px-8 overflow-x-hidden";
 
   return (
     <div className={containerClass}>
       <Header />
-      <main className="flex-1 w-full flex flex-col items-center justify-center">
+      <main className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-6 sm:py-8 md:py-12">
+        {/* Error message for API issues */}
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 w-full max-w-lg rounded shadow-sm">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm leading-5 text-red-700">{error}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <Carousel
           cards={cards}
           index={carouselIndex}
@@ -112,6 +126,14 @@ const App = () => {
           error={error}
           theme={themes[carouselIndex]}
         />
+
+        {/* Theme indicator for small screens */}
+        {themes[carouselIndex] && (
+          <div className="mt-4 text-sm text-purple-700 font-medium sm:hidden">
+            Theme: <span className="font-bold">{themes[carouselIndex]}</span>
+            <span className="text-xs"> ({carouselIndex + 1}/{themes.length})</span>
+          </div>
+        )}
       </main>
       <Footer />
     </div>
