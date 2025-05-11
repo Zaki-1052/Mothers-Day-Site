@@ -70,7 +70,7 @@ project-root/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Zaki-1052/Mothers-Day-Site.git
 cd mothers-day-carousel
 ```
 
